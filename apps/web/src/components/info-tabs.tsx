@@ -120,16 +120,7 @@ export default function InfoTabs() {
                 Informasi Selanjutnya
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  const element = document.getElementById("register-section");
-                  element?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="flex-1"
-              >
-                Daftar Sekarang
-              </Button>
+
             </div>
           </div>
         )}

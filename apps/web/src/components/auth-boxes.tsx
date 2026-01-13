@@ -10,10 +10,10 @@ import {
   CardTitle,
 } from "./ui/card";
 import { UserPlus, LogIn, Pencil, Unlock, User, Lock, Mail, Phone, Calendar, Hash, X } from "lucide-react";
+import { useModalContext } from "@/contexts/modal-context";
 
 export default function AuthBoxes() {
-  const [showRegisterModal, setShowRegisterModal] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  const { showRegisterModal, showLoginModal, setShowRegisterModal, setShowLoginModal } = useModalContext();
   const [formData, setFormData] = useState({
     nisn: "",
     tanggalLahir: "",
@@ -54,7 +54,7 @@ export default function AuthBoxes() {
     <>
       <section id="auth-section" className="container mx-auto px-4 py-12">
         <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
-          <Card className="border-0 bg-gradient-to-br from-primary/10 via-primary/5 to-background hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+          <Card id="register-card" className="border-0 bg-gradient-to-br from-primary/10 via-primary/5 to-background hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-0 hover:opacity-100 transition-opacity duration-300" />
             <CardHeader className="text-center relative z-10">
               <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 shadow-lg shadow-primary/20">
@@ -94,7 +94,7 @@ export default function AuthBoxes() {
             </CardContent>
           </Card>
 
-          <Card className="border-0 bg-gradient-to-br from-primary/10 via-primary/5 to-background hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+          <Card id="login-card" className="border-0 bg-gradient-to-br from-primary/10 via-primary/5 to-background hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-0 hover:opacity-100 transition-opacity duration-300" />
             <CardHeader className="text-center relative z-10">
               <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 shadow-lg shadow-primary/20">

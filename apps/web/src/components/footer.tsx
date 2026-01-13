@@ -17,7 +17,7 @@ export default function Footer() {
   return (
     <footer
       id="kontak"
-      className="bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 text-gray-100"
+      className="bg-primary text-primary-foreground"
     >
       <div className="container mx-auto px-4 py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 mb-12">
@@ -34,7 +34,7 @@ export default function Footer() {
                 UM-PTKIN 2026
               </span>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-gray-200 text-sm leading-relaxed">
               Ujian Masuk Perguruan Tinggi Keagamaan Islam Negeri adalah
               jalur seleksi yang terpercaya untuk memasuki PTKIN di seluruh
               Indonesia.
@@ -82,7 +82,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-gray-400 hover:text-white hover:underline underline-offset-4 transition-all text-sm"
+                    className="text-gray-200 hover:text-white hover:underline underline-offset-4 transition-all text-sm"
                   >
                     {link.label}
                   </a>
@@ -100,7 +100,7 @@ export default function Footer() {
                     href={resource.href}
                     target={resource.external ? "_blank" : undefined}
                     rel={resource.external ? "noopener noreferrer" : undefined}
-                    className="text-gray-400 hover:text-white hover:underline underline-offset-4 transition-all text-sm flex items-center gap-2"
+                    className="text-gray-200 hover:text-white hover:underline underline-offset-4 transition-all text-sm flex items-center gap-2"
                   >
                     {resource.label}
                     {resource.external && (
@@ -117,8 +117,8 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="space-y-2">
                 <div className="flex items-start gap-3">
-                  <MapPin className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <div className="text-sm text-gray-400">
+                  <MapPin className="h-5 w-5 text-blue-300 flex-shrink-0 mt-0.5" />
+                  <div className="text-sm text-gray-200">
                     <span className="font-medium text-white block mb-1">
                       UIN Sayyid Ali Rahmatullah Tulungagung
                     </span>
@@ -128,19 +128,19 @@ export default function Footer() {
                 </div>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-blue-400 flex-shrink-0" />
+                <Phone className="h-5 w-5 text-blue-300 flex-shrink-0" />
                 <a
                   href="tel:081578901030"
-                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                  className="text-sm text-gray-200 hover:text-white transition-colors"
                 >
                   081578901030
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-blue-400 flex-shrink-0" />
+                <Mail className="h-5 w-5 text-blue-300 flex-shrink-0" />
                 <a
                   href="mailto:info@um.ptkin.ac.id"
-                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                  className="text-sm text-gray-200 hover:text-white transition-colors"
                 >
                   info@um.ptkin.ac.id
                 </a>
@@ -149,10 +149,10 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 pt-8">
+        <div className="border-t border-white/10 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="text-center md:text-left">
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-300">
                 © {new Date().getFullYear()} Kementerian Agama Republik Indonesia.
                 All rights reserved.
               </p>
@@ -162,14 +162,14 @@ export default function Footer() {
                 href="http://www.kemenag.go.id"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors"
               >
                 <ExternalLink className="h-4 w-4" />
                 kemenag.go.id
               </a>
-              <div className="h-6 w-px bg-gray-700" />
+              <div className="h-6 w-px bg-white/10" />
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">Didukung oleh:</span>
+                <span className="text-sm text-gray-300">Didukung oleh:</span>
                 <img
                   src="/logo-bank-mandiri.png"
                   alt="Bank Mandiri"

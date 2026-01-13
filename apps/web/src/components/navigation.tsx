@@ -4,20 +4,19 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, easeInOut } from 'framer-motion';
 import { Menu, X, ArrowRight, Zap, Search } from 'lucide-react';
 import Link from 'next/link';
+import { useModalContext } from '@/contexts/modal-context';
 
 const navItems = [
-  { name: 'Home', href: '/' },
-  { name: 'Features', href: '/features' },
-  { name: 'Solutions', href: '/solutions' },
-  { name: 'Pricing', href: '/pricing' },
-  { name: 'Resources', href: '/resources' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Beranda', href: '/' },
+  { name: 'Program Studi', href: '/program-studi' },
+  { name: 'Helpdesk', href: 'https://sapa.ptkin.ac.id/', external: true },
 ];
 
 export default function Header2() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const { setShowRegisterModal, setShowLoginModal } = useModalContext();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -110,6 +109,8 @@ export default function Header2() {
                   <Link
                     prefetch={false}
                     href={item.href as any}
+                    target={(item as any).external ? '_blank' : undefined}
+                    rel={(item as any).external ? 'noopener noreferrer' : undefined}
                     className="text-foreground/80 hover:text-foreground relative rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200"
                   >
                     {hoveredItem === item.name && (
@@ -136,28 +137,24 @@ export default function Header2() {
               className="hidden items-center space-x-3 lg:flex"
               variants={itemVariants}
             >
-
-
-              <Link
-                prefetch={false}
-                href="/sign-in"
+              <button
+                onClick={() => setShowRegisterModal(true)}
                 className="text-foreground/80 hover:text-foreground px-4 py-2 text-sm font-medium transition-colors duration-200"
               >
                 Sign In
-              </Link>
+              </button>
 
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Link
-                  prefetch={false}
-                  href="/login"
-                  className="bg-foreground text-background hover:bg-foreground/90 inline-flex items-center space-x-2 rounded-lg px-5 py-2.5 text-sm font-medium shadow-sm transition-all duration-200"
+                <button
+                  onClick={() => setShowLoginModal(true)}
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center space-x-2 rounded-lg px-5 py-2.5 text-sm font-medium shadow-sm transition-all duration-200"
                 >
                   <span>Login</span>
                   <ArrowRight className="h-4 w-4" />
-                </Link>
+                </button>
               </motion.div>
             </motion.div>
 
@@ -201,6 +198,8 @@ export default function Header2() {
                       <Link
                         prefetch={false}
                         href={item.href as any}
+                        target={(item as any).external ? '_blank' : undefined}
+                        rel={(item as any).external ? 'noopener noreferrer' : undefined}
                         className="text-foreground hover:bg-muted block rounded-lg px-4 py-3 font-medium transition-colors duration-200"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
@@ -214,22 +213,24 @@ export default function Header2() {
                   className="border-border space-y-3 border-t pt-6"
                   variants={mobileItemVariants}
                 >
-                  <Link
-                    prefetch={false}
-                    href="/login"
+                  <button
+                    onClick={() => {
+                      setShowRegisterModal(true);
+                      setIsMobileMenuOpen(false);
+                    }}
                     className="text-foreground hover:bg-muted block w-full rounded-lg py-3 text-center font-medium transition-colors duration-200"
-                    onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Sign In
-                  </Link>
-                  <Link
-                    prefetch={false}
-                    href="/signup"
-                    className="bg-foreground text-background hover:bg-foreground/90 block w-full rounded-lg py-3 text-center font-medium transition-all duration-200"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowLoginModal(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="text-foreground hover:bg-muted block w-full rounded-lg py-3 text-center font-medium transition-colors duration-200"
                   >
-                    Get Started
-                  </Link>
+                    Login
+                  </button>
                 </motion.div>
               </div>
             </motion.div>
