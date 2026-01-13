@@ -18,4 +18,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ${{ secrets.APP_PATH }}
+            GIT_SSH_COMMAND="ssh -i /home/dev-user/.ssh/id_ed25519 -o IdentitiesOnly=yes" \
             git pull origin main
