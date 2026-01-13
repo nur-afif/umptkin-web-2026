@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -13,6 +14,7 @@ import { UserPlus, LogIn, Pencil, Unlock, User, Lock, Mail, Phone, Calendar, Has
 import { useModalContext } from "@/contexts/modal-context";
 
 export default function AuthBoxes() {
+  const router = useRouter();
   const { showRegisterModal, showLoginModal, setShowRegisterModal, setShowLoginModal } = useModalContext();
   const [formData, setFormData] = useState({
     nisn: "",
@@ -45,9 +47,9 @@ export default function AuthBoxes() {
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Login data:", loginData);
-    alert("Login berhasil! Redirecting to dashboard...");
     setShowLoginModal(false);
     setLoginData({ username: "", password: "" });
+    router.push("/form-sekolah");
   };
 
   return (
