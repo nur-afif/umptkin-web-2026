@@ -1,21 +1,23 @@
-name: Auto Deploy
+name: Auto Pull via RSA SSH
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: SSH Pull to Server
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ${{ secrets.APP_PATH }}
-            git pull origin main
+    - name: Setup SSH (RSA)
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+    - name: Pull on Server
+      run: |
+        ssh -i ~/.ssh/id_rsa -o IdentitiesOnly=yes \
+        ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+        "cd ${{ secrets.SSH_PATH }} && git pull origin main"
