@@ -1,18 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
 } from "@/components/ui/card";
-import { User, MapPin, FileText, Hash, Phone, Mail, Calendar, Users, Wallet, Accessibility, LogOut, GraduationCap, School, Beaker, Star, Compass, Pencil, MessageSquare, CreditCard, Bell } from "lucide-react";
+import { User, MapPin, Hash, Phone, Mail, Calendar, Users, Wallet, Accessibility, LogOut, GraduationCap, School, Beaker, Star, Compass, Pencil, MessageSquare, CreditCard, Bell, Building, Award } from "lucide-react";
 
 export default function FormSekolah() {
-  const [user, setUser] = useState({ username: "", nama: "" });
 
   const handleLogout = () => {
-    if (confirm("Apakah Anda yakin ingin keluar?")) {
+    if (typeof window !== "undefined" && window.confirm("Apakah Anda yakin ingin keluar?")) {
       window.location.href = "/";
     }
   };
@@ -50,13 +48,18 @@ export default function FormSekolah() {
       noSKL: "",
       noKTP: "",
       noKartuSiswa: "",
+      pernahPesantren: "tidak_pernah",
+      namaPesantren: "",
+      lamaPesantren: "1 Tahun",
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Data form:", formData);
-    alert("Data berhasil disimpan!");
+    if (typeof window !== "undefined") {
+      window.alert("Data berhasil disimpan!");
+    }
   };
 
   return (
@@ -489,6 +492,72 @@ export default function FormSekolah() {
                       <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                     </div>
                   </div>
+
+                  <div className="flex items-start gap-3">
+                    <label className="text-sm font-semibold text-gray-700 w-40 shrink-0 pt-2">Pernah mengikuti pendidikan pesantren? <span className="text-red-500">*</span></label>
+                    <div className="relative flex-1 flex gap-6">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="pernahPesantren"
+                          value="pernah"
+                          checked={formData.pendidikan.pernahPesantren === "pernah"}
+                          onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, pernahPesantren: e.target.value, namaPesantren: "", lamaPesantren: "1 Tahun" } })}
+                          className="w-4 h-4 text-primary focus:ring-primary cursor-pointer"
+                        />
+                        <span className="text-sm text-gray-700">Pernah</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="pernahPesantren"
+                          value="tidak_pernah"
+                          checked={formData.pendidikan.pernahPesantren === "tidak_pernah"}
+                          onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, pernahPesantren: e.target.value, namaPesantren: "", lamaPesantren: "1 Tahun" } })}
+                          className="w-4 h-4 text-primary focus:ring-primary cursor-pointer"
+                        />
+                        <span className="text-sm text-gray-700">Tidak Pernah</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  {formData.pendidikan.pernahPesantren === "pernah" && (
+                    <>
+                      <div className="flex items-center gap-3">
+                        <label className="text-sm font-semibold text-gray-700 w-40 shrink-0">Nama Pesantren <span className="text-red-500">*</span></label>
+                        <div className="relative flex-1">
+                          <input
+                            type="text"
+                            required
+                            value={formData.pendidikan.namaPesantren}
+                            onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, namaPesantren: e.target.value } })}
+                            className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors"
+                            placeholder="Masukkan nama pesantren"
+                          />
+                          <Building className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <label className="text-sm font-semibold text-gray-700 w-40 shrink-0">Lama</label>
+                        <div className="relative flex-1">
+                          <select
+                            required
+                            value={formData.pendidikan.lamaPesantren}
+                            onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, lamaPesantren: e.target.value } })}
+                            className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors appearance-none cursor-pointer"
+                          >
+                            <option value="6 Bulan">6 Bulan</option>
+                            <option value="1 Tahun">1 Tahun</option>
+                            <option value="2 Tahun">2 Tahun</option>
+                            <option value="3 Tahun">3 Tahun</option>
+                            <option value="> 3 Tahun">{">"} 3 Tahun</option>
+                          </select>
+                          <Award className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
