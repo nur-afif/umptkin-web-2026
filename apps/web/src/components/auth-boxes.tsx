@@ -49,7 +49,7 @@ export default function AuthBoxes() {
     console.log("Login data:", loginData);
     setShowLoginModal(false);
     setLoginData({ username: "", password: "" });
-    router.push("/form-sekolah");
+    router.push("/form-pendaftaran");
   };
 
   return (

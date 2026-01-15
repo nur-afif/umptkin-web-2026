@@ -128,7 +128,7 @@ Website modern untuk pendaftaran Ujian Masuk Perguruan Tinggi Keagamaan Islam Ne
   - Alert feedback setelah submit
 
 #### Form Pendaftaran
-- **Halaman Form Sekolah** (`/form-sekolah`) dengan data lengkap:
+- **Halaman Form Pendaftaran** (`/form-pendaftaran`) dengan data lengkap:
   - **Biodata Diri**:
     - No. KTP/NIK
     - Nama
@@ -196,7 +196,7 @@ apps/web/src/
 ├── app/
 │   ├── program-studi/      # Halaman Program Studi
 │   │   └── page.tsx
-│   ├── form-sekolah/       # Halaman Form Pendaftaran
+│   ├── form-pendaftaran/   # Halaman Form Pendaftaran
 │   │   └── page.tsx
 │   ├── signup/             # Halaman Registrasi
 │   │   └── page.tsx
