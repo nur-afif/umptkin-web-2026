@@ -4,6 +4,7 @@ import { useState } from "react";
 import { BookOpen, Settings, Calendar, CreditCard, Search, FileText, Video, HelpCircle, ChevronRight } from "lucide-react";
 import { INFO_CONTENTS } from "@/data/info-content";
 import { Button } from "./ui/button";
+import VideoEmbed from "./video-embed";
 
 const tabs = [
   { id: "pengantar", label: "Pengantar", icon: BookOpen, color: "from-blue-500 to-blue-600" },
@@ -101,10 +102,29 @@ export default function InfoTabs() {
 
             <div
               className="prose prose-slate max-w-none [&_iframe]:w-full [&_div.relative]:w-full [&_div[style*='padding-bottom']]:h-0 [&_iframe[style*='position: absolute']]:border-0 prose-headings:text-gray-900 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-p:text-gray-700 prose-li:text-gray-700 prose-strong:text-gray-900 prose-ol:text-gray-700 prose-ul:text-gray-700 prose-table:text-gray-700"
-              dangerouslySetInnerHTML={{
-                __html: INFO_CONTENTS[activeTab]?.content || "",
-              }}
-            />
+            >
+              {activeTab === "tutorial" ? (
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Video Tutorial Ujian</h3>
+                    <VideoEmbed className="aspect-video" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Panduan Singkat</h3>
+                    <ul className="space-y-2 list-disc list-inside text-sm">
+                      <li>Pastikan komputer/laptop dan koneksi internet stabil sebelum ujian</li>
+                      <li>Login menggunakan NISN dan password yang telah terdaftar</li>
+                      <li>Ikuti semua instruksi yang diberikan</li>
+                      <li>Kerjakan soal dengan teliti dan cek kembali sebelum submit</li>
+                    </ul>
+                  </div>
+                </div>
+              ) : (
+                <div dangerouslySetInnerHTML={{
+                  __html: INFO_CONTENTS[activeTab]?.content || "",
+                }} />
+              )}
+            </div>
 
             <div className="mt-8 pt-8 border-t border-gray-200 flex flex-col sm:flex-row gap-4">
               <Button
