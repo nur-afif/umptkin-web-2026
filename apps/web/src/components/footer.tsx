@@ -41,23 +41,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg bg-white/10 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-all"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg bg-white/10 hover:bg-blue-500 hover:text-white flex items-center justify-center transition-all"
-              >
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/umptkin/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-white/10 hover:bg-pink-600 hover:text-white flex items-center justify-center transition-all"
@@ -65,7 +49,7 @@ export default function Footer() {
                 <Instagram className="h-5 w-5" />
               </a>
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@pmbptkin"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-white/10 hover:bg-red-600 hover:text-white flex items-center justify-center transition-all"
@@ -173,7 +157,7 @@ export default function Footer() {
                 <img
                   src="/logo-bank-mandiri.png"
                   alt="Bank Mandiri"
-                  className="h-8 w-auto"
+                  className="h-10 w-auto"
                 />
               </div>
             </div>
