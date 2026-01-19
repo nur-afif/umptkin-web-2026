@@ -124,7 +124,7 @@ Pada tahun 2026 UM-PTKIN diselenggarakan secara luring di PTKIN Titik Lokasi Uji
   <li>
     <p className="mb-2"><strong>Melakukan Pembayaran</strong><br/>
     <div className="flex items-center gap-3 my-3">
-      <img src="/logo-bank-mandiri.png" alt="Bank Mandiri" className="h-10 w-auto" />
+      <img src="/mandiri-icon-for%20tab-info.jpg" alt="Bank Mandiri" className="h-10 w-auto" />
       <div className="text-sm">
         <p className="font-semibold">Bank Mandiri</p>
         <p className="text-muted-foreground">Channel pembayaran resmi UM-PTKIN</p>

@@ -119,6 +119,22 @@ export default function InfoTabs() {
                     </ul>
                   </div>
                 </div>
+              ) : activeTab === "biaya" ? (
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Biaya Pendaftaran</h3>
+                    <p className="mb-4">
+                      Biaya pendaftaran sebesar{" "}
+                      <span className="font-bold text-primary text-xl">Rp. 200.000</span> (Dua
+                      Ratus Ribu Rupiah), belum termasuk biaya tambahan jika transaksi menggunakan
+                      bank selain Bank Mandiri.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Tata Cara Pembayaran</h3>
+                    <VideoEmbed className="aspect-video" />
+                  </div>
+                </div>
               ) : (
                 <div dangerouslySetInnerHTML={{
                   __html: INFO_CONTENTS[activeTab]?.content || "",
