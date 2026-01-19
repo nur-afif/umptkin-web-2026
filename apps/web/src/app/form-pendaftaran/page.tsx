@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,6 +9,7 @@ import {
 import { User, MapPin, Hash, Phone, Mail, Calendar, Users, Wallet, Accessibility, LogOut, GraduationCap, School, Beaker, Star, Compass, Pencil, MessageSquare, CreditCard, Bell, Building, Award } from "lucide-react";
 
 export default function FormSekolah() {
+  const router = useRouter();
 
   const handleLogout = () => {
     if (typeof window !== "undefined" && window.confirm("Apakah Anda yakin ingin keluar?")) {
@@ -58,8 +60,10 @@ export default function FormSekolah() {
     e.preventDefault();
     console.log("Data form:", formData);
     if (typeof window !== "undefined") {
+      window.localStorage.setItem("formPendaftaran", JSON.stringify(formData));
       window.alert("Data berhasil disimpan!");
     }
+    router.push("/form-klarifikasi-registrasi");
   };
 
   return (
@@ -73,7 +77,7 @@ export default function FormSekolah() {
                 <User className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white">Form Pendaftaran</h3>
+                <h3 className="text-xl font-bold text-white">Registrasi</h3>
                 <p className="text-sm text-white/80">Lengkapi biodata dan data pendidikan</p>
               </div>
             </div>
@@ -353,9 +357,9 @@ export default function FormSekolah() {
                     <div className="relative flex-1">
                       <input
                         type="number"
-                        readOnly
                         value={formData.pendidikan.nisn}
-                        className="w-full rounded-xl border-2 border-gray-200 bg-gray-100 px-4 py-2 pl-10 text-sm text-gray-600 focus:outline-none cursor-not-allowed"
+                        onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, nisn: e.target.value } })}
+                        className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors"
                         placeholder="10 digit NISN"
                       />
                       <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -367,9 +371,9 @@ export default function FormSekolah() {
                     <div className="relative flex-1">
                       <input
                         type="number"
-                        readOnly
                         value={formData.pendidikan.npsn}
-                        className="w-full rounded-xl border-2 border-gray-200 bg-gray-100 px-4 py-2 pl-10 text-sm text-gray-600 focus:outline-none cursor-not-allowed"
+                        onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, npsn: e.target.value } })}
+                        className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors"
                         placeholder="Nomor Pokok Sekolah Nasional"
                       />
                       <Beaker className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -381,9 +385,9 @@ export default function FormSekolah() {
                     <div className="relative flex-1">
                       <input
                         type="text"
-                        readOnly
                         value={formData.pendidikan.namaSekolah}
-                        className="w-full rounded-xl border-2 border-gray-200 bg-gray-100 px-4 py-2 pl-10 text-sm text-gray-600 focus:outline-none cursor-not-allowed"
+                        onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, namaSekolah: e.target.value } })}
+                        className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors"
                         placeholder="Nama lengkap sekolah"
                       />
                       <School className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -394,10 +398,11 @@ export default function FormSekolah() {
                     <label className="text-sm font-semibold text-gray-700 w-40 shrink-0">Status Sekolah</label>
                     <div className="relative flex-1">
                       <select
-                        disabled
                         value={formData.pendidikan.statusSekolah}
-                        className="w-full rounded-xl border-2 border-gray-200 bg-gray-100 px-4 py-2 pl-10 text-sm text-gray-600 focus:outline-none cursor-not-allowed appearance-none"
+                        onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, statusSekolah: e.target.value } })}
+                        className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors appearance-none"
                       >
+                        <option value="">Pilih status</option>
                         <option value="Negeri">Negeri</option>
                         <option value="Swasta">Swasta</option>
                       </select>
@@ -409,11 +414,14 @@ export default function FormSekolah() {
                     <label className="text-sm font-semibold text-gray-700 w-40 shrink-0">Provinsi</label>
                     <div className="relative flex-1">
                       <select
-                        disabled
                         value={formData.pendidikan.provinsi}
-                        className="w-full rounded-xl border-2 border-gray-200 bg-gray-100 px-4 py-2 pl-10 text-sm text-gray-600 focus:outline-none cursor-not-allowed appearance-none"
+                        onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, provinsi: e.target.value } })}
+                        className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors appearance-none"
                       >
+                        <option value="">Pilih provinsi</option>
                         <option value="Prov. Jawa Barat">Prov. Jawa Barat</option>
+                        <option value="Prov. Jawa Tengah">Prov. Jawa Tengah</option>
+                        <option value="Prov. Jawa Timur">Prov. Jawa Timur</option>
                       </select>
                       <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                     </div>
@@ -423,11 +431,14 @@ export default function FormSekolah() {
                     <label className="text-sm font-semibold text-gray-700 w-40 shrink-0">Kota</label>
                     <div className="relative flex-1">
                       <select
-                        disabled
                         value={formData.pendidikan.kota}
-                        className="w-full rounded-xl border-2 border-gray-200 bg-gray-100 px-4 py-2 pl-10 text-sm text-gray-600 focus:outline-none cursor-not-allowed appearance-none"
+                        onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, kota: e.target.value } })}
+                        className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors appearance-none"
                       >
+                        <option value="">Pilih kota</option>
                         <option value="Kab. Kuningan">Kab. Kuningan</option>
+                        <option value="Kab. Cirebon">Kab. Cirebon</option>
+                        <option value="Kota Bandung">Kota Bandung</option>
                       </select>
                       <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                     </div>
@@ -437,11 +448,14 @@ export default function FormSekolah() {
                     <label className="text-sm font-semibold text-gray-700 w-40 shrink-0">Kecamatan</label>
                     <div className="relative flex-1">
                       <select
-                        disabled
                         value={formData.pendidikan.kecamatan}
-                        className="w-full rounded-xl border-2 border-gray-200 bg-gray-100 px-4 py-2 pl-10 text-sm text-gray-600 focus:outline-none cursor-not-allowed appearance-none"
+                        onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, kecamatan: e.target.value } })}
+                        className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors appearance-none"
                       >
+                        <option value="">Pilih kecamatan</option>
                         <option value="Kec. Jalaksana">Kec. Jalaksana</option>
+                        <option value="Kec. Kedawung">Kec. Kedawung</option>
+                        <option value="Kec. Ciledug">Kec. Ciledug</option>
                       </select>
                       <Compass className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                     </div>
@@ -451,10 +465,11 @@ export default function FormSekolah() {
                     <label className="text-sm font-semibold text-gray-700 w-40 shrink-0">Jenis Sekolah</label>
                     <div className="relative flex-1">
                       <select
-                        disabled
                         value={formData.pendidikan.jenisSekolah}
-                        className="w-full rounded-xl border-2 border-gray-200 bg-gray-100 px-4 py-2 pl-10 text-sm text-gray-600 focus:outline-none cursor-not-allowed appearance-none"
+                        onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, jenisSekolah: e.target.value } })}
+                        className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors appearance-none"
                       >
+                        <option value="">Pilih jenis</option>
                         <option value="SMA">SMA</option>
                         <option value="SMK">SMK</option>
                         <option value="MA">MA</option>
@@ -467,10 +482,11 @@ export default function FormSekolah() {
                     <label className="text-sm font-semibold text-gray-700 w-40 shrink-0">Akreditasi</label>
                     <div className="relative flex-1">
                       <select
-                        disabled
                         value={formData.pendidikan.akreditasi}
-                        className="w-full rounded-xl border-2 border-gray-200 bg-gray-100 px-4 py-2 pl-10 text-sm text-gray-600 focus:outline-none cursor-not-allowed appearance-none"
+                        onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, akreditasi: e.target.value } })}
+                        className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors appearance-none"
                       >
+                        <option value="">Pilih akreditasi</option>
                         <option value="A">A</option>
                         <option value="B">B</option>
                         <option value="C">C</option>
@@ -484,9 +500,9 @@ export default function FormSekolah() {
                     <div className="relative flex-1">
                       <input
                         type="text"
-                        readOnly
                         value={formData.pendidikan.alamat}
-                        className="w-full rounded-xl border-2 border-gray-200 bg-gray-100 px-4 py-2 pl-10 text-sm text-gray-600 focus:outline-none cursor-not-allowed"
+                        onChange={(e) => setFormData({ ...formData, pendidikan: { ...formData.pendidikan, alamat: e.target.value } })}
+                        className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors"
                         placeholder="Alamat lengkap sekolah"
                       />
                       <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
