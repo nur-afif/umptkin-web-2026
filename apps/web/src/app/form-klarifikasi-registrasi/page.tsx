@@ -1,18 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
-  Banknote,
-  Calendar,
   CheckCircle2,
   CreditCard,
   FileText,
-  Hash,
 } from "lucide-react";
 
 export default function FormKlarifikasiRegistrasi() {
+  const router = useRouter();
   const [dataPendaftaran, setDataPendaftaran] = useState<{
     biodata: Record<string, string>;
     pendidikan: Record<string, string>;
@@ -36,6 +35,10 @@ export default function FormKlarifikasiRegistrasi() {
     if (typeof window !== "undefined") {
       window.alert("Form klarifikasi berhasil dikirim!");
     }
+  };
+
+  const handleEditPendaftaran = () => {
+    router.push("/form-pendaftaran");
   };
 
   useEffect(() => {
@@ -75,11 +78,21 @@ export default function FormKlarifikasiRegistrasi() {
           </div>
 
           <form onSubmit={handleSubmit} className="p-8 space-y-8">
-            {dataPendaftaran && (
+            {dataPendaftaran ? (
               <div className="space-y-6">
-                <div className="flex items-center gap-2 pb-2 border-b border-gray-200">
-                  <FileText className="h-5 w-5 text-primary" />
-                  <h4 className="font-semibold text-gray-800">Data Pendaftaran</h4>
+                <div className="flex items-center justify-between gap-4 pb-2 border-b border-gray-200">
+                  <div className="flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-primary" />
+                    <h4 className="font-semibold text-gray-800">Data Pendaftaran</h4>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="h-10 rounded-xl border-2 text-sm font-semibold hover:bg-gray-50 transition-colors"
+                    onClick={handleEditPendaftaran}
+                  >
+                    Edit Data
+                  </Button>
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
@@ -128,6 +141,30 @@ export default function FormKlarifikasiRegistrasi() {
                   </div>
                 </div>
               </div>
+            ) : (
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-2">
+                    <h5 className="text-lg font-semibold text-gray-800">Data pendaftaran belum ada</h5>
+                    <p className="text-sm text-gray-600 max-w-md">
+                      Silakan isi form pendaftaran terlebih dahulu agar datanya tampil di sini.
+                    </p>
+                  </div>
+                  <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <FileText className="h-6 w-6 text-primary" />
+                  </div>
+                </div>
+                <div className="mt-6 flex justify-end">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="h-11 rounded-xl border-2 text-sm font-semibold hover:bg-gray-50 transition-colors"
+                    onClick={handleEditPendaftaran}
+                  >
+                    Isi Form Pendaftaran
+                  </Button>
+                </div>
+              </div>
             )}
 
             <div className="space-y-4">
@@ -136,99 +173,47 @@ export default function FormKlarifikasiRegistrasi() {
                 <h4 className="font-semibold text-gray-800">Form Pembayaran</h4>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700">
-                    Metode Pembayaran <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <select
-                      required
-                      value={formData.pembayaran.metode}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          pembayaran: { ...formData.pembayaran, metode: e.target.value },
-                        })
-                      }
-                      className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors appearance-none cursor-pointer"
-                    >
-                      <option value="">Pilih metode</option>
-                      <option value="transfer">Transfer Bank</option>
-                      <option value="virtual_account">Virtual Account</option>
-                      <option value="loket">Loket/Pembayaran Langsung</option>
-                    </select>
-                    <Banknote className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-2">
+                    <h5 className="text-2xl font-bold text-primary">Pembayaran</h5>
+                    <p className="text-sm text-gray-600 max-w-md">
+                      Pembayaran dilakukan melalui Bank Mandiri (Teller, ATM, Livin by Mandiri),
+                      maupun dari bank lainnya (ATM dan Transfer).
+                    </p>
+                  </div>
+                  <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <CreditCard className="h-6 w-6 text-primary" />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700">
-                    Bank <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <select
-                      required
-                      value={formData.pembayaran.bank}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          pembayaran: { ...formData.pembayaran, bank: e.target.value },
-                        })
-                      }
-                      className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors appearance-none cursor-pointer"
-                    >
-                      <option value="">Pilih bank</option>
-                      <option value="bni">BNI</option>
-                      <option value="bri">BRI</option>
-                      <option value="bca">BCA</option>
-                      <option value="mandiri">Mandiri</option>
-                    </select>
-                    <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                <div className="mt-6">
+                  <h6 className="text-sm font-semibold text-gray-800">RINCIAN PEMBAYARAN</h6>
+                  <div className="mt-3 border-t border-gray-200">
+                    <div className="grid grid-cols-[50px_1fr_100px] md:grid-cols-[60px_1fr_140px] text-xs md:text-sm font-semibold text-gray-700 py-3">
+                      <span>No</span>
+                      <span>Deskripsi</span>
+                      <span className="text-right">Harga Rp.</span>
+                    </div>
+                    <div className="grid grid-cols-[50px_1fr_100px] md:grid-cols-[60px_1fr_140px] text-sm text-gray-700 py-3 border-t border-gray-100">
+                      <span>1</span>
+                      <span>Biaya pendaftaran</span>
+                      <span className="text-right">200.000</span>
+                    </div>
+                    <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-100">
+                      <span className="text-sm text-gray-600">Total Rp.</span>
+                      <span className="text-lg font-semibold text-gray-900">200.000</span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700">
-                    No. Referensi <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      required
-                      value={formData.pembayaran.noReferensi}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          pembayaran: { ...formData.pembayaran, noReferensi: e.target.value },
-                        })
-                      }
-                      className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors"
-                      placeholder="Masukkan nomor referensi"
-                    />
-                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700">
-                    Tanggal Pembayaran <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="date"
-                      required
-                      value={formData.pembayaran.tanggalBayar}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          pembayaran: { ...formData.pembayaran, tanggalBayar: e.target.value },
-                        })
-                      }
-                      className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 pl-10 text-sm text-gray-700 focus:border-primary focus:outline-none transition-colors"
-                    />
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  </div>
+                <div className="mt-6 flex justify-center">
+                  <Button
+                    type="button"
+                    className="h-12 px-10 rounded-xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white text-sm font-semibold shadow-lg shadow-primary/25 transition-all hover:shadow-xl"
+                  >
+                    Bayar
+                  </Button>
                 </div>
               </div>
             </div>

@@ -1,12 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
 } from "@/components/ui/card";
 import { User, MapPin, Hash, Phone, Mail, Calendar, Users, Wallet, Accessibility, LogOut, GraduationCap, School, Beaker, Star, Compass, Pencil, MessageSquare, CreditCard, Bell, Building, Award } from "lucide-react";
+
+const initialFormData = {
+  biodata: {
+    noKTP: "",
+    nama: "",
+    jenisKelamin: "",
+    tempatLahir: "",
+    tanggalLahir: "",
+    agama: "",
+    noTelp: "",
+    email: "",
+    provinsi: "",
+    kotaKabupaten: "",
+    alamat: "",
+    namaAyah: "",
+    namaIbu: "",
+    gajiOrtu: "",
+    pesertaKhusus: "",
+  },
+  pendidikan: {
+    nisn: "",
+    npsn: "",
+    namaSekolah: "",
+    statusSekolah: "",
+    provinsi: "",
+    kota: "",
+    kecamatan: "",
+    jenisSekolah: "",
+    akreditasi: "",
+    alamat: "",
+    noIjazah: "",
+    noSKL: "",
+    noKTP: "",
+    noKartuSiswa: "",
+    pernahPesantren: "tidak_pernah",
+    namaPesantren: "",
+    lamaPesantren: "1 Tahun",
+  },
+};
 
 export default function FormSekolah() {
   const router = useRouter();
@@ -17,44 +56,37 @@ export default function FormSekolah() {
     }
   };
 
-  const [formData, setFormData] = useState({
-    biodata: {
-      noKTP: "",
-      nama: "",
-      jenisKelamin: "",
-      tempatLahir: "",
-      tanggalLahir: "",
-      agama: "",
-      noTelp: "",
-      email: "",
-      provinsi: "",
-      kotaKabupaten: "",
-      alamat: "",
-      namaAyah: "",
-      namaIbu: "",
-      gajiOrtu: "",
-      pesertaKhusus: "",
-    },
-    pendidikan: {
-      nisn: "",
-      npsn: "",
-      namaSekolah: "",
-      statusSekolah: "",
-      provinsi: "",
-      kota: "",
-      kecamatan: "",
-      jenisSekolah: "",
-      akreditasi: "",
-      alamat: "",
-      noIjazah: "",
-      noSKL: "",
-      noKTP: "",
-      noKartuSiswa: "",
-      pernahPesantren: "tidak_pernah",
-      namaPesantren: "",
-      lamaPesantren: "1 Tahun",
-    },
-  });
+  const [formData, setFormData] = useState(initialFormData);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const stored = window.localStorage.getItem("formPendaftaran");
+    if (!stored) {
+      setIsHydrated(true);
+      return;
+    }
+    try {
+      const parsed = JSON.parse(stored);
+      setFormData({
+        biodata: { ...initialFormData.biodata, ...parsed.biodata },
+        pendidikan: { ...initialFormData.pendidikan, ...parsed.pendidikan },
+      });
+    } catch (error) {
+      console.error("Gagal membaca data pendaftaran:", error);
+    } finally {
+      setIsHydrated(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isHydrated || typeof window === "undefined") {
+      return;
+    }
+    window.localStorage.setItem("formPendaftaran", JSON.stringify(formData));
+  }, [formData, isHydrated]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
