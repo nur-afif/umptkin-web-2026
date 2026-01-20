@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
 } from "@/components/ui/card";
 import { User, MapPin, Hash, Phone, Mail, Calendar, Users, Wallet, Accessibility, LogOut, GraduationCap, School, Beaker, Star, Compass, Pencil, MessageSquare, CreditCard, Bell, Building, Award } from "lucide-react";
+import { getFormPendaftaranData, setFormPendaftaranData } from "@/lib/form-pendaftaran-store";
 
 const initialFormData = {
   biodata: {
@@ -56,52 +57,31 @@ export default function FormSekolah() {
     }
   };
 
-  const [formData, setFormData] = useState(initialFormData);
-  const [isHydrated, setIsHydrated] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-    const stored = window.localStorage.getItem("formPendaftaran");
+  const [formData, setFormData] = useState(() => {
+    const stored = getFormPendaftaranData();
     if (!stored) {
-      setIsHydrated(true);
-      return;
+      return initialFormData;
     }
-    try {
-      const parsed = JSON.parse(stored);
-      setFormData({
-        biodata: { ...initialFormData.biodata, ...parsed.biodata },
-        pendidikan: { ...initialFormData.pendidikan, ...parsed.pendidikan },
-      });
-    } catch (error) {
-      console.error("Gagal membaca data pendaftaran:", error);
-    } finally {
-      setIsHydrated(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isHydrated || typeof window === "undefined") {
-      return;
-    }
-    window.localStorage.setItem("formPendaftaran", JSON.stringify(formData));
-  }, [formData, isHydrated]);
+    return {
+      biodata: { ...initialFormData.biodata, ...stored.biodata },
+      pendidikan: { ...initialFormData.pendidikan, ...stored.pendidikan },
+    };
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Data form:", formData);
     if (typeof window !== "undefined") {
-      window.localStorage.setItem("formPendaftaran", JSON.stringify(formData));
       window.alert("Data berhasil disimpan!");
     }
+    setFormPendaftaranData(formData);
     router.push("/form-klarifikasi-registrasi");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-primary/5 p-4">
       <div className="w-full max-w-7xl mx-auto">
-        <Card className="border-0 shadow-2xl">
+        <Card className="border-0 bg-transparent shadow-none">
           <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-4 rounded-t-2xl">
             <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -131,7 +111,7 @@ export default function FormSekolah() {
             </div>
           </div>
 
-          <div className="px-6 py-4 bg-primary/5 border-b border-primary/10">
+          <div className="px-6 py-4">
             <p className="text-sm text-gray-600 leading-relaxed">
               Data yang Anda masukkan akan divalidasi lebih lanjut. Kolom bertanda <span className="text-red-500 font-bold">*</span> wajib diisi.
             </p>

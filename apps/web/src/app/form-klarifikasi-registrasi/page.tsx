@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -11,11 +10,6 @@ import {
 } from "lucide-react";
 
 export default function FormKlarifikasiRegistrasi() {
-  const router = useRouter();
-  const [dataPendaftaran, setDataPendaftaran] = useState<{
-    biodata: Record<string, string>;
-    pendidikan: Record<string, string>;
-  } | null>(null);
   const [formData, setFormData] = useState({
     pembayaran: {
       metode: "",
@@ -37,28 +31,10 @@ export default function FormKlarifikasiRegistrasi() {
     }
   };
 
-  const handleEditPendaftaran = () => {
-    router.push("/form-pendaftaran");
-  };
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-    const stored = window.localStorage.getItem("formPendaftaran");
-    if (stored) {
-      try {
-        setDataPendaftaran(JSON.parse(stored));
-      } catch (error) {
-        console.error("Gagal membaca data pendaftaran:", error);
-      }
-    }
-  }, []);
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-primary/5 p-4">
       <div className="w-full max-w-5xl mx-auto">
-        <Card className="border-0 shadow-2xl">
+        <Card className="border-0 bg-transparent shadow-none">
           <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-4 rounded-t-2xl">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center">
@@ -71,101 +47,13 @@ export default function FormKlarifikasiRegistrasi() {
             </div>
           </div>
 
-          <div className="px-6 py-4 bg-primary/5 border-b border-primary/10">
+          <div className="px-6 py-4">
             <p className="text-sm text-gray-600 leading-relaxed">
               Pastikan data pembayaran dan pernyataan kebenaran sudah sesuai sebelum dikirim.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="p-8 space-y-8">
-            {dataPendaftaran ? (
-              <div className="space-y-6">
-                <div className="flex items-center justify-between gap-4 pb-2 border-b border-gray-200">
-                  <div className="flex items-center gap-2">
-                    <FileText className="h-5 w-5 text-primary" />
-                    <h4 className="font-semibold text-gray-800">Data Pendaftaran</h4>
-                  </div>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="h-10 rounded-xl border-2 text-sm font-semibold hover:bg-gray-50 transition-colors"
-                    onClick={handleEditPendaftaran}
-                  >
-                    Edit Data
-                  </Button>
-                </div>
-
-                <div className="grid gap-6 md:grid-cols-2">
-                  <div className="space-y-3">
-                    <h5 className="text-sm font-semibold text-gray-700">Biodata Diri</h5>
-                    <div className="space-y-2 text-sm text-gray-700">
-                      <p><span className="font-semibold">No. KTP/NIK:</span> {dataPendaftaran.biodata.noKTP || "-"}</p>
-                      <p><span className="font-semibold">Nama:</span> {dataPendaftaran.biodata.nama || "-"}</p>
-                      <p><span className="font-semibold">Jenis Kelamin:</span> {dataPendaftaran.biodata.jenisKelamin || "-"}</p>
-                      <p><span className="font-semibold">Tempat Lahir:</span> {dataPendaftaran.biodata.tempatLahir || "-"}</p>
-                      <p><span className="font-semibold">Tanggal Lahir:</span> {dataPendaftaran.biodata.tanggalLahir || "-"}</p>
-                      <p><span className="font-semibold">Agama:</span> {dataPendaftaran.biodata.agama || "-"}</p>
-                      <p><span className="font-semibold">No. Telp/HP:</span> {dataPendaftaran.biodata.noTelp || "-"}</p>
-                      <p><span className="font-semibold">E-mail:</span> {dataPendaftaran.biodata.email || "-"}</p>
-                      <p><span className="font-semibold">Provinsi:</span> {dataPendaftaran.biodata.provinsi || "-"}</p>
-                      <p><span className="font-semibold">Kota/Kabupaten:</span> {dataPendaftaran.biodata.kotaKabupaten || "-"}</p>
-                      <p><span className="font-semibold">Alamat:</span> {dataPendaftaran.biodata.alamat || "-"}</p>
-                      <p><span className="font-semibold">Nama Ayah:</span> {dataPendaftaran.biodata.namaAyah || "-"}</p>
-                      <p><span className="font-semibold">Nama Ibu:</span> {dataPendaftaran.biodata.namaIbu || "-"}</p>
-                      <p><span className="font-semibold">Gaji Ortu/Wali:</span> {dataPendaftaran.biodata.gajiOrtu || "-"}</p>
-                      <p><span className="font-semibold">Peserta Berkebutuhan Khusus:</span> {dataPendaftaran.biodata.pesertaKhusus || "-"}</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <h5 className="text-sm font-semibold text-gray-700">Pendidikan SMA Sederajat</h5>
-                    <div className="space-y-2 text-sm text-gray-700">
-                      <p><span className="font-semibold">NISN:</span> {dataPendaftaran.pendidikan.nisn || "-"}</p>
-                      <p><span className="font-semibold">NPSN:</span> {dataPendaftaran.pendidikan.npsn || "-"}</p>
-                      <p><span className="font-semibold">Nama Sekolah:</span> {dataPendaftaran.pendidikan.namaSekolah || "-"}</p>
-                      <p><span className="font-semibold">Status Sekolah:</span> {dataPendaftaran.pendidikan.statusSekolah || "-"}</p>
-                      <p><span className="font-semibold">Provinsi:</span> {dataPendaftaran.pendidikan.provinsi || "-"}</p>
-                      <p><span className="font-semibold">Kota:</span> {dataPendaftaran.pendidikan.kota || "-"}</p>
-                      <p><span className="font-semibold">Kecamatan:</span> {dataPendaftaran.pendidikan.kecamatan || "-"}</p>
-                      <p><span className="font-semibold">Jenis Sekolah:</span> {dataPendaftaran.pendidikan.jenisSekolah || "-"}</p>
-                      <p><span className="font-semibold">Akreditasi:</span> {dataPendaftaran.pendidikan.akreditasi || "-"}</p>
-                      <p><span className="font-semibold">Alamat Sekolah:</span> {dataPendaftaran.pendidikan.alamat || "-"}</p>
-                      <p><span className="font-semibold">Pernah Pesantren:</span> {dataPendaftaran.pendidikan.pernahPesantren || "-"}</p>
-                      {dataPendaftaran.pendidikan.pernahPesantren === "pernah" && (
-                        <>
-                          <p><span className="font-semibold">Nama Pesantren:</span> {dataPendaftaran.pendidikan.namaPesantren || "-"}</p>
-                          <p><span className="font-semibold">Lama Pesantren:</span> {dataPendaftaran.pendidikan.lamaPesantren || "-"}</p>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="space-y-2">
-                    <h5 className="text-lg font-semibold text-gray-800">Data pendaftaran belum ada</h5>
-                    <p className="text-sm text-gray-600 max-w-md">
-                      Silakan isi form pendaftaran terlebih dahulu agar datanya tampil di sini.
-                    </p>
-                  </div>
-                  <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <FileText className="h-6 w-6 text-primary" />
-                  </div>
-                </div>
-                <div className="mt-6 flex justify-end">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="h-11 rounded-xl border-2 text-sm font-semibold hover:bg-gray-50 transition-colors"
-                    onClick={handleEditPendaftaran}
-                  >
-                    Isi Form Pendaftaran
-                  </Button>
-                </div>
-              </div>
-            )}
 
             <div className="space-y-4">
               <div className="flex items-center gap-2 pb-2 border-b border-gray-200">
@@ -173,7 +61,7 @@ export default function FormKlarifikasiRegistrasi() {
                 <h4 className="font-semibold text-gray-800">Form Pembayaran</h4>
               </div>
 
-              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
+              <div className="space-y-6">
                 <div className="flex items-start justify-between gap-4">
                   <div className="space-y-2">
                     <h5 className="text-2xl font-bold text-primary">Pembayaran</h5>
@@ -187,7 +75,7 @@ export default function FormKlarifikasiRegistrasi() {
                   </div>
                 </div>
 
-                <div className="mt-6">
+                <div>
                   <h6 className="text-sm font-semibold text-gray-800">RINCIAN PEMBAYARAN</h6>
                   <div className="mt-3 border-t border-gray-200">
                     <div className="grid grid-cols-[50px_1fr_100px] md:grid-cols-[60px_1fr_140px] text-xs md:text-sm font-semibold text-gray-700 py-3">
@@ -207,7 +95,7 @@ export default function FormKlarifikasiRegistrasi() {
                   </div>
                 </div>
 
-                <div className="mt-6 flex justify-center">
+                <div className="flex justify-center">
                   <Button
                     type="button"
                     className="h-12 px-10 rounded-xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white text-sm font-semibold shadow-lg shadow-primary/25 transition-all hover:shadow-xl"
