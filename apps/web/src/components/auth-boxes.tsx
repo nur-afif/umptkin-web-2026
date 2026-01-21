@@ -49,6 +49,9 @@ export default function AuthBoxes() {
     console.log("Login data:", loginData);
     setShowLoginModal(false);
     setLoginData({ username: "", password: "" });
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem("allow-form-pendaftaran", "1");
+    }
     router.push("/form-pendaftaran");
   };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -50,6 +50,22 @@ const initialFormData = {
 
 export default function FormSekolah() {
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const allow = window.sessionStorage.getItem("allow-form-pendaftaran");
+    if (!allow) {
+      if (window.history.length > 1) {
+        router.back();
+      } else {
+        router.replace("/");
+      }
+      return;
+    }
+    window.sessionStorage.removeItem("allow-form-pendaftaran");
+  }, [router]);
 
   const handleLogout = () => {
     if (typeof window !== "undefined" && window.confirm("Apakah Anda yakin ingin keluar?")) {

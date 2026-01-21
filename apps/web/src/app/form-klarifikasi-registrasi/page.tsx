@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -8,8 +9,11 @@ import {
   CreditCard,
   FileText,
 } from "lucide-react";
+import { getFormPendaftaranData } from "@/lib/form-pendaftaran-store";
 
 export default function FormKlarifikasiRegistrasi() {
+  const router = useRouter();
+  const [dataPendaftaran] = useState(() => getFormPendaftaranData());
   const [formData, setFormData] = useState({
     pembayaran: {
       metode: "",
@@ -23,12 +27,30 @@ export default function FormKlarifikasiRegistrasi() {
     },
   });
 
+  useEffect(() => {
+    if (!dataPendaftaran) {
+      if (typeof window !== "undefined") {
+        const sameOriginReferrer =
+          document.referrer && new URL(document.referrer).origin === window.location.origin;
+        if (sameOriginReferrer && window.history.length > 1) {
+          router.back();
+        } else {
+          router.replace("/");
+        }
+      }
+    }
+  }, [dataPendaftaran, router]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Data klarifikasi:", formData);
     if (typeof window !== "undefined") {
       window.alert("Form klarifikasi berhasil dikirim!");
     }
+  };
+
+  const handleEditPendaftaran = () => {
+    router.push("/form-pendaftaran");
   };
 
   return (
@@ -54,6 +76,94 @@ export default function FormKlarifikasiRegistrasi() {
           </div>
 
           <form onSubmit={handleSubmit} className="p-8 space-y-8">
+            {dataPendaftaran ? (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between gap-4 pb-2 border-b border-gray-200">
+                  <div className="flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-primary" />
+                    <h4 className="font-semibold text-gray-800">Pendaftaran</h4>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="h-10 rounded-xl border-2 text-sm font-semibold hover:bg-gray-50 transition-colors"
+                    onClick={handleEditPendaftaran}
+                  >
+                    Edit Data
+                  </Button>
+                </div>
+
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div className="space-y-3">
+                    <h5 className="text-sm font-semibold text-gray-700">Biodata Diri</h5>
+                    <div className="space-y-2 text-sm text-gray-700">
+                      <p><span className="font-semibold">No. KTP/NIK:</span> {dataPendaftaran.biodata.noKTP || "-"}</p>
+                      <p><span className="font-semibold">Nama:</span> {dataPendaftaran.biodata.nama || "-"}</p>
+                      <p><span className="font-semibold">Jenis Kelamin:</span> {dataPendaftaran.biodata.jenisKelamin || "-"}</p>
+                      <p><span className="font-semibold">Tempat Lahir:</span> {dataPendaftaran.biodata.tempatLahir || "-"}</p>
+                      <p><span className="font-semibold">Tanggal Lahir:</span> {dataPendaftaran.biodata.tanggalLahir || "-"}</p>
+                      <p><span className="font-semibold">Agama:</span> {dataPendaftaran.biodata.agama || "-"}</p>
+                      <p><span className="font-semibold">No. Telp/HP:</span> {dataPendaftaran.biodata.noTelp || "-"}</p>
+                      <p><span className="font-semibold">E-mail:</span> {dataPendaftaran.biodata.email || "-"}</p>
+                      <p><span className="font-semibold">Provinsi:</span> {dataPendaftaran.biodata.provinsi || "-"}</p>
+                      <p><span className="font-semibold">Kota/Kabupaten:</span> {dataPendaftaran.biodata.kotaKabupaten || "-"}</p>
+                      <p><span className="font-semibold">Alamat:</span> {dataPendaftaran.biodata.alamat || "-"}</p>
+                      <p><span className="font-semibold">Nama Ayah:</span> {dataPendaftaran.biodata.namaAyah || "-"}</p>
+                      <p><span className="font-semibold">Nama Ibu:</span> {dataPendaftaran.biodata.namaIbu || "-"}</p>
+                      <p><span className="font-semibold">Gaji Ortu/Wali:</span> {dataPendaftaran.biodata.gajiOrtu || "-"}</p>
+                      <p><span className="font-semibold">Peserta Berkebutuhan Khusus:</span> {dataPendaftaran.biodata.pesertaKhusus || "-"}</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h5 className="text-sm font-semibold text-gray-700">Pendidikan SMA Sederajat</h5>
+                    <div className="space-y-2 text-sm text-gray-700">
+                      <p><span className="font-semibold">NISN:</span> {dataPendaftaran.pendidikan.nisn || "-"}</p>
+                      <p><span className="font-semibold">NPSN:</span> {dataPendaftaran.pendidikan.npsn || "-"}</p>
+                      <p><span className="font-semibold">Nama Sekolah:</span> {dataPendaftaran.pendidikan.namaSekolah || "-"}</p>
+                      <p><span className="font-semibold">Status Sekolah:</span> {dataPendaftaran.pendidikan.statusSekolah || "-"}</p>
+                      <p><span className="font-semibold">Provinsi:</span> {dataPendaftaran.pendidikan.provinsi || "-"}</p>
+                      <p><span className="font-semibold">Kota:</span> {dataPendaftaran.pendidikan.kota || "-"}</p>
+                      <p><span className="font-semibold">Kecamatan:</span> {dataPendaftaran.pendidikan.kecamatan || "-"}</p>
+                      <p><span className="font-semibold">Jenis Sekolah:</span> {dataPendaftaran.pendidikan.jenisSekolah || "-"}</p>
+                      <p><span className="font-semibold">Akreditasi:</span> {dataPendaftaran.pendidikan.akreditasi || "-"}</p>
+                      <p><span className="font-semibold">Alamat Sekolah:</span> {dataPendaftaran.pendidikan.alamat || "-"}</p>
+                      <p><span className="font-semibold">Pernah Pesantren:</span> {dataPendaftaran.pendidikan.pernahPesantren || "-"}</p>
+                      {dataPendaftaran.pendidikan.pernahPesantren === "pernah" && (
+                        <>
+                          <p><span className="font-semibold">Nama Pesantren:</span> {dataPendaftaran.pendidikan.namaPesantren || "-"}</p>
+                          <p><span className="font-semibold">Lama Pesantren:</span> {dataPendaftaran.pendidikan.lamaPesantren || "-"}</p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-2">
+                    <h5 className="text-lg font-semibold text-gray-800">Data pendaftaran belum ada</h5>
+                    <p className="text-sm text-gray-600 max-w-md">
+                      Silakan isi form pendaftaran terlebih dahulu agar datanya tampil di sini.
+                    </p>
+                  </div>
+                  <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <FileText className="h-6 w-6 text-primary" />
+                  </div>
+                </div>
+                <div className="mt-6 flex justify-end">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="h-11 rounded-xl border-2 text-sm font-semibold hover:bg-gray-50 transition-colors"
+                    onClick={handleEditPendaftaran}
+                  >
+                    Isi Form Pendaftaran
+                  </Button>
+                </div>
+              </div>
+            )}
 
             <div className="space-y-4">
               <div className="flex items-center gap-2 pb-2 border-b border-gray-200">
