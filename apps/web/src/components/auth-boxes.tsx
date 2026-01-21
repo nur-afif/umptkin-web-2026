@@ -49,8 +49,8 @@ export default function AuthBoxes() {
     console.log("Login data:", loginData);
     setShowLoginModal(false);
     setLoginData({ username: "", password: "" });
-    if (typeof window !== "undefined") {
-      window.sessionStorage.setItem("allow-form-pendaftaran", "1");
+    if (typeof document !== "undefined") {
+      document.cookie = "umptkin_login=1; path=/; max-age=86400";
     }
     router.push("/form-pendaftaran");
   };
@@ -301,7 +301,7 @@ export default function AuthBoxes() {
                 </Button>
               </div>
             </div>
-            <form onSubmit={handleLoginSubmit} className="p-6 space-y-5">
+            <form onSubmit={handleLoginSubmit} className="p-6 space-y-5" noValidate>
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                   <User className="h-4 w-4 text-primary" />
@@ -350,8 +350,9 @@ export default function AuthBoxes() {
                   Batal
                 </Button>
                 <Button
-                  type="submit"
+                  type="button"
                   className="flex-1 h-12 rounded-xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white text-sm font-semibold shadow-lg shadow-primary/25 transition-all hover:shadow-xl"
+                  onClick={handleLoginSubmit}
                 >
                   Login
                 </Button>

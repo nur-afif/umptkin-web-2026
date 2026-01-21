@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -26,20 +26,6 @@ export default function FormKlarifikasiRegistrasi() {
       setuju: false,
     },
   });
-
-  useEffect(() => {
-    if (!dataPendaftaran) {
-      if (typeof window !== "undefined") {
-        const sameOriginReferrer =
-          document.referrer && new URL(document.referrer).origin === window.location.origin;
-        if (sameOriginReferrer && window.history.length > 1) {
-          router.back();
-        } else {
-          router.replace("/");
-        }
-      }
-    }
-  }, [dataPendaftaran, router]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

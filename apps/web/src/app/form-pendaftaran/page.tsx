@@ -52,19 +52,19 @@ export default function FormSekolah() {
   const router = useRouter();
 
   useEffect(() => {
-    if (typeof window === "undefined") {
+    if (typeof document === "undefined") {
       return;
     }
-    const allow = window.sessionStorage.getItem("allow-form-pendaftaran");
-    if (!allow) {
+    const isLoggedIn = document.cookie
+      .split("; ")
+      .some((cookie) => cookie.startsWith("umptkin_login="));
+    if (!isLoggedIn) {
       if (window.history.length > 1) {
         router.back();
       } else {
         router.replace("/");
       }
-      return;
     }
-    window.sessionStorage.removeItem("allow-form-pendaftaran");
   }, [router]);
 
   const handleLogout = () => {
@@ -97,7 +97,7 @@ export default function FormSekolah() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-primary/5 p-4">
       <div className="w-full max-w-7xl mx-auto">
-        <Card className="border-0 bg-transparent shadow-none">
+        <Card className="border-0 shadow-2xl">
           <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-4 rounded-t-2xl">
             <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
